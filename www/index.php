@@ -12,31 +12,48 @@
 <body>
     <div class="container">
     <?php echo "<h1>Users</h1>"; ?>
-
     <?php
 
     $conn = mysqli_connect('db', 'user', 'test', "myDb");
+    $stmt = $conn->prepare('SELECT * FROM Person');
+    $stmt->execute();
+    $cfg['QueryHistoryDB'] = true;
 
-    $query = 'SELECT * From Person';
-    $result = mysqli_query($conn, $query);
+
+    $result = $stmt->get_result();
 
     echo '<table class="table table-striped">';
-    echo '<thead><tr><th></th><th>id</th><th>name</th><th>age</th></tr></thead>';
+    echo '<thead><tr><th></th><th>name</th><th>age</th><th>password</th></tr></thead>';
+
     while($value = $result->fetch_array(MYSQLI_ASSOC)){
         echo '<tr>';
         echo '<td><a href="#"><span class="glyphicon glyphicon-search"></span></a></td>';
-        foreach($value as $element){
-            echo '<td>' . $element . '</td>';
+        $id = 0;
+        $key = 'key_string';
+        foreach (array_values($value) as $i =>$val){
+            if ($i == 0){
+                $id = $val;
+                continue;
+            }
+            else {
+                echo '<td>' . $val . '</td>';
+            }
         }
-
         echo '</tr>';
     }
     echo '</table>';
 
+    # Add User Form
+    echo '<br><h1>Add User</h1><br>';
+    echo '<form action="makePerson.php" method="get">';
+        echo 'name: <input type="text" name="name"><br>';
+        echo 'age: <input type="int" name="age"><br>';
+        echo 'id (number of users): <input type="int" name="id"><br><br>';
+        echo '<input type="submit">';
+    echo '</form>';
+
     $result->close();
-
     mysqli_close($conn);
-
     ?>
     </div>
 </body>
