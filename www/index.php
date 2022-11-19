@@ -45,12 +45,11 @@
 
     # Add User Form
     echo '<br><h1>Add User</h1><br>';
-    echo '<form action="makePerson.php" method="get">';
-        echo 'name: <input type="text" name="name"><br>';
-        echo 'age: <input type="int" name="age"><br>';
-        echo 'id (number of users): <input type="int" name="id"><br><br>';
-        echo '<input type="submit">';
-    echo '</form>';
+    echo '<form action="makePerson.php" method="get">name: <input type="text" name="name"><br>
+         age: <input type="int" name="age"><br>
+         password: <input type="text" name="password"><br>
+         id (number of users): <input type="int" name="id"><br><br>
+         <input type="submit"></form>';
 
     $result->close();
     mysqli_close($conn);
